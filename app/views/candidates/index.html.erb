@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<%= image_tag "photo3.jpg", class: "photo2" %>
+
+
+<h1 class="title">Candidates</h1>
+
+<div class="search-candidates">
+    <%= form_tag(candidates_path, method: :get, class: "search-form") do %>
+      <%= text_field_tag :search, params[:search], class: "form-control"%>
+      <%= submit_tag 'Search', name: nil, class: "btn btn-warning" %>
+    <% end %>
+</div>
+
+<table class="table table-striped table-responsive">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Job</th>
+      <th>Created</th>
+      <th>Note</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @candidates.each do |candidate| %>
+      <tr>
+        <td><%= candidate.name %></td>
+        <td><%= candidate.email %></td>
+        <td><%= candidate.phone %></td>
+        <td><%= candidate.job %></td>
+        <td><%= candidate.created %></td>
+        <td><%= truncate(candidate.note,:ommision => "......", :length => 100)  %></td>
+        <td><%= link_to 'Show', candidate %></td>
+        <td><%= link_to 'Edit', edit_candidate_path(candidate) %></td>
+        <td><%= link_to 'Destroy', candidate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+  <div class="digg_pagination">
+    <%= will_paginate @candidates %>
+  </div>
+<%= link_to 'New Candidate', new_candidate_path, class: "btn btn-warning btn-float" %>
+
+   
+</div>
